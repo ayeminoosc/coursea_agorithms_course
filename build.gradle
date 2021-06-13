@@ -7,13 +7,23 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
 }
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+//    implementation name: 'algs4'
+
 }
 
 test {
     useJUnitPlatform()
+}
+
+task execute(type:JavaExec) {
+    main = project.hasProperty("main_class") ? getProperty("main_class") : "NULL"
+    classpath = sourceSets.main.runtimeClasspath
 }

@@ -2,6 +2,7 @@ package com.amo.algorithms.convexhull;
 
 public class Point implements Comparable<Point>{
     public double x, y;
+    public int i;
 
     public Point(){
 

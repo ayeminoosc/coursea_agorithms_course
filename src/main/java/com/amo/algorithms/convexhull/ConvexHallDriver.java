@@ -15,22 +15,7 @@ import java.util.Scanner;
  *  rbox 20 D2 | java -cp build/libs/coursea_agorithms_course-1.0-SNAPSHOT.jar com.amo.algorithms.convexhull.ConvexHallDriver
  */
 public class ConvexHallDriver {
-//    public static void main(String[]args){
-//        List<Point> allPoints = new ArrayList<>();
-//        Scanner sc = new Scanner(System.in);
-//        sc.nextLine();
-//        sc.nextLine();
-//        while(sc.hasNextLine()) {
-//            String temp []= sc.nextLine().split(" ");
-//            allPoints.add(new Point(Double.valueOf(temp[0]), Double.valueOf(temp[1])));
-//        }
-//
-//        List<Point> points = new ConvexHullFinder().findConvexHall(allPoints);
-//
-//        points.forEach(System.out::println);
-//    }
 
-    public static DecimalFormat decimalFormat = new DecimalFormat("#.###");
     public static void main(String[]args){
         test();
     }
@@ -85,33 +70,25 @@ public class ConvexHallDriver {
             String temp []= sc.nextLine().split(" ");
             allPoints.add(new Point(Double.valueOf(temp[0]), Double.valueOf(temp[1])));
         }
-
+        System.out.println("All Points Given");
         allPoints.forEach(System.out::println);
 
         StdDraw.setPenRadius(0.02);
-        StdDraw.setPenColor(StdDraw.BLUE);
+        StdDraw.setPenColor(StdDraw.LIGHT_GRAY);
         StdDraw.setFont(new Font("TimesRoman", Font.PLAIN, 15));
 
         drawPoints(allPoints);
 
 
-        StdDraw.setPenColor(StdDraw.MAGENTA);
-        Point smallestPoint = convexHullFinder.findSmallestPoint(allPoints);
-        System.out.println("smallest point " + smallestPoint);
-        drawPoint(smallestPoint);
-
-//        StdDraw.setPenRadius(0.002);
-//        allPoints.remove(smallestPoint);
-//        List<Point> points = convexHullFinder.sortGivenPointsInCounterClockwiseFromGivenPoint(allPoints, smallestPoint);
-//        System.out.println(" printing slope");
-//        points.forEach(p->System.out.println(p.slope(smallestPoint)));
-//        for(int i = 0; i<points.size(); i++){
-//            drawLine(smallestPoint, points.get(i), i+1);
-//        }
-
         List<Point> convexPoints = convexHullFinder.findConvexHall(allPoints);
-        drawPoints(convexPoints);
-        convexPoints.forEach(System.out::println);
+        StdDraw.setPenColor(StdDraw.BLUE);
+        StdDraw.setPenRadius(0.01);
+        drawLineForAllPoints(convexPoints);
+        drawLine(convexPoints.get(0), convexPoints.get(convexPoints.size()-1));
+        convexPoints.forEach(p -> {
+            System.out.println("point " + p.i  + " " + p);
+        });
+
 
     }
 
@@ -134,7 +111,6 @@ public class ConvexHallDriver {
     private static void drawPoint(Point p1){
         Point p = convertDrawablePoint(p1);
         StdDraw.point(p.x, p.y);
-//        StdDraw.text(p.x, p.y, "(" + decimalFormat.format(p1.x) + ", " + decimalFormat.format(p1.y) + ")");
     }
 
     private static void drawLine(Point p1, Point p2){
@@ -143,10 +119,21 @@ public class ConvexHallDriver {
         StdDraw.line(p1.x, p1.y, p2.x, p2.y);
     }
 
+    private static void drawLineForAllPoints(List<Point> points){
+        for(int i=0; i<points.size() -1; i++){
+            drawLine(points.get(i), points.get(i+1));
+        }
+    }
+
     private static void drawLine(Point p1, Point p2, int number){
         Point t = convertDrawablePoint(p2);
         drawLine(p1, p2);
         StdDraw.text(t.x, t.y, String.valueOf(number));
+    }
+
+    private static void drawPointNumber(Point p){
+        Point t = convertDrawablePoint(p);
+        StdDraw.text(t.x, t.y, String.valueOf(p.i));
     }
 
 }

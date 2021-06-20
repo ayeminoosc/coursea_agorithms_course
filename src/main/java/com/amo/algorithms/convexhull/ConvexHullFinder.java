@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 public class ConvexHullFinder {
 
@@ -36,12 +37,23 @@ public class ConvexHullFinder {
             Point b = stack.pop();
             Point a = stack.peek();
             Point c = points.get(i);
-            if(orientation(a, b, c) == 2){
-                stack.push(b);
-                stack.push(c);
-            }
+            doOrientation(a, b, c, stack);
+
         }
-        return stack.stream().toList();
+        return stack.stream().collect(Collectors.toList());
+    }
+
+    void doOrientation(Point a, Point b, Point c, Stack<Point> stack){
+        if(orientation(a, b, c) == 2){
+            System.out.println("point " + a.i + ", "+ b.i + ", " +  c.i + " is counter clockwise");
+            stack.push(b);
+            stack.push(c);
+        }else{
+            System.out.println("point " + a.i + ", "+ b.i + ", " +  c.i + " is not counter clockwise");
+            b = stack.pop();
+            a = stack.peek();
+            doOrientation(a, b, c, stack);
+        }
     }
 
     // To find orientation of ordered triplet (p1, p2, p3).

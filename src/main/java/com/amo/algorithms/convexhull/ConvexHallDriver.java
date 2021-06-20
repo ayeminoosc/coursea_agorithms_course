@@ -12,15 +12,15 @@ import java.util.Scanner;
 
 /**
  * run the follow from terminal to test this class
- *  rbox 20 D2 | java -cp build/libs/coursea_agorithms_course-1.0-SNAPSHOT.jar com.amo.algorithms.convexhull.ConvexHallDriver
+ * rbox 20 D2 | java -cp build/libs/coursea_agorithms_course-1.0-SNAPSHOT.jar com.amo.algorithms.convexhull.ConvexHallDriver
  */
 public class ConvexHallDriver {
 
-    public static void main(String[]args){
+    public static void main(String[] args) {
         test();
     }
 
-    public static void test(){
+    public static void test() {
         String testData = "0.3215348546593775 0.03629583077160248 \n" +
                 "0.02402358131857918 -0.2356728797179394 \n" +
                 "0.04590851212470659 -0.4156409924995536 \n" +
@@ -66,8 +66,8 @@ public class ConvexHallDriver {
         List<Point> allPoints = new ArrayList<>();
         ConvexHullFinder convexHullFinder = new ConvexHullFinder();
 
-        while(sc.hasNextLine()) {
-            String temp []= sc.nextLine().split(" ");
+        while (sc.hasNextLine()) {
+            String temp[] = sc.nextLine().split(" ");
             allPoints.add(new Point(Double.valueOf(temp[0]), Double.valueOf(temp[1])));
         }
         System.out.println("All Points Given");
@@ -84,19 +84,19 @@ public class ConvexHallDriver {
         StdDraw.setPenColor(StdDraw.BLUE);
         StdDraw.setPenRadius(0.01);
         drawLineForAllPoints(convexPoints);
-        drawLine(convexPoints.get(0), convexPoints.get(convexPoints.size()-1));
+        drawLine(convexPoints.get(0), convexPoints.get(convexPoints.size() - 1));
         convexPoints.forEach(p -> {
-            System.out.println("point " + p.i  + " " + p);
+            System.out.println("point " + p.i + " " + p);
         });
 
 
     }
 
-    private static  void drawPoints(List<Point> points){
+    private static void drawPoints(List<Point> points) {
         points.forEach(ConvexHallDriver::drawPoint);
     }
 
-    private static List<Point> convertDrawablePoints(List<Point> points){
+    private static List<Point> convertDrawablePoints(List<Point> points) {
         List<Point> tempPoints = new ArrayList<>(points);
         for (Point point : points) {
             tempPoints.add(convertDrawablePoint(point));
@@ -104,34 +104,34 @@ public class ConvexHallDriver {
         return tempPoints;
     }
 
-    private static Point convertDrawablePoint(Point point){
+    private static Point convertDrawablePoint(Point point) {
         return new Point(point.x + 0.5, point.y + 0.5);
     }
 
-    private static void drawPoint(Point p1){
+    private static void drawPoint(Point p1) {
         Point p = convertDrawablePoint(p1);
         StdDraw.point(p.x, p.y);
     }
 
-    private static void drawLine(Point p1, Point p2){
-        p1 =  convertDrawablePoint(p1);
+    private static void drawLine(Point p1, Point p2) {
+        p1 = convertDrawablePoint(p1);
         p2 = convertDrawablePoint(p2);
         StdDraw.line(p1.x, p1.y, p2.x, p2.y);
     }
 
-    private static void drawLineForAllPoints(List<Point> points){
-        for(int i=0; i<points.size() -1; i++){
-            drawLine(points.get(i), points.get(i+1));
+    private static void drawLineForAllPoints(List<Point> points) {
+        for (int i = 0; i < points.size() - 1; i++) {
+            drawLine(points.get(i), points.get(i + 1));
         }
     }
 
-    private static void drawLine(Point p1, Point p2, int number){
+    private static void drawLine(Point p1, Point p2, int number) {
         Point t = convertDrawablePoint(p2);
         drawLine(p1, p2);
         StdDraw.text(t.x, t.y, String.valueOf(number));
     }
 
-    private static void drawPointNumber(Point p){
+    private static void drawPointNumber(Point p) {
         Point t = convertDrawablePoint(p);
         StdDraw.text(t.x, t.y, String.valueOf(p.i));
     }
